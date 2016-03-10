@@ -8,6 +8,7 @@
 #include <fstream>
 #include <sstream>
 #include <cstdint>
+#include <vector>
 using namespace std;
 
 class DogControl
@@ -18,38 +19,60 @@ public:
 	string sLocation;
 	string sType;
 	string sYear;
-
 };
 
 int main()
 {
 	int i = 1;
+	int iColoumn = 0;
+	int iRow = 0;
+	int iRowCounter = 0;
+	int iCSV = 0;
 	string sLine;
-	DogControl DC;
+	vector<DogControl> v2d;
 	do {
 		ifstream myfile("dog-control-orders.csv");
 		if (myfile.is_open())
 		{
 			cout << "file is open";
 			system("pause");
-			//	
-			//myfile >> a >> b >> c >> d >> e;
-			//	{
-			//	cout << a << b << c << d << e;
-			//}
 			while (getline(myfile, sLine, ','))
 			{
-				//cout << "in the while loop";
-				cout << sLine;
-				istringstream iss(sLine);
-				string a;
-				if (!(iss >> a))
+				if (iColoumn == 0)
 				{
-					cout << "Broken";
-					break; 
+					DogControl DC;
+					v2d.push_back(DC);
+					iColoumn = 0;
 				}
-				cout << a << "\n";
+				if (iColoumn == 0)
+				{
+					v2d[iRow].sLabel = sLine;
+				}
+				if (iColoumn == 1)
+				{
+					v2d[iRow].sURI = sLine;
+				}
+				if (iColoumn == 2)
+				{
+					v2d[iRow].sLocation = sLine;
+				}
+				if (iColoumn == 3)
+				{
+					v2d[iRow].sType = sLine;
+				}
+				if (iColoumn == 4)
+				{
+					v2d[iRow].sYear = sLine;
+				}
+					++iColoumn;
+				if (iColoumn == 5)
+				{
+					iColoumn == 0;
+					++iRow;
+				}
+				cout << sLine << "\n";
 			}
+			cout << "Ended" << endl;
 		}
 		else
 		{
