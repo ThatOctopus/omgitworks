@@ -2,7 +2,8 @@
 //
 
 #include "stdafx.h"
-//#include "CsvCpp.hpp"
+#include "DogControl.h"
+#include "Search.h"
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -10,16 +11,6 @@
 #include <cstdint>
 #include <vector>
 using namespace std;
-
-class DogControl
-{
-public:
-	string sLabel;
-	string sURI;
-	string sLocation;
-	string sType;
-	string sYear;
-};
 
 int main()
 {
@@ -67,7 +58,7 @@ int main()
 					++iColoumn;
 				if (iColoumn == 5)
 				{
-					iColoumn == 0;
+					iColoumn = 0;
 					++iRow;
 				}
 				cout << sLine << "\n";
