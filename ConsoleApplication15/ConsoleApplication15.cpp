@@ -20,6 +20,7 @@ int main()
 	int iRowCounter = 0;
 	int iCSV = 0;
 	string sLine;
+	string sCell;
 	vector<DogControl> v2d;
 	do {
 		ifstream myfile("dog-control-orders.csv");
@@ -27,43 +28,52 @@ int main()
 		{
 			cout << "file is open";
 			system("pause");
-			while (getline(myfile, sLine, ','))
+			while (getline(myfile, sLine, '\n'))
 			{
-				if (iColoumn == 0)
+				istringstream ss(sLine);
+
+				while (getline(ss, sCell, ','))
 				{
-					DogControl DC;
-					v2d.push_back(DC);
-					iColoumn = 0;
+					if (iColoumn == 0)
+					{
+						DogControl DC;
+						v2d.push_back(DC);
+					}
+
+					if (iColoumn == 0)
+					{
+						v2d[iRow].sLabel = sCell;
+					}
+					if (iColoumn == 1)
+					{
+						v2d[iRow].sURI = sCell;
+					}
+					if (iColoumn == 2)
+					{
+						v2d[iRow].sLocation = sCell;
+					}
+					if (iColoumn == 3)
+					{
+						v2d[iRow].sType = sCell;
+					}
+					if (iColoumn == 4)
+					{
+						v2d[iRow].sYear = sCell;
+					}
+
+					if (iColoumn == 4)
+					{
+						iColoumn = 0;
+						++iRow;
+					}
+					else {
+						++iColoumn;
+					}
+					cout << sLine << "\n";
 				}
-				if (iColoumn == 0)
-				{
-					v2d[iRow].sLabel = sLine;
-				}
-				if (iColoumn == 1)
-				{
-					v2d[iRow].sURI = sLine;
-				}
-				if (iColoumn == 2)
-				{
-					v2d[iRow].sLocation = sLine;
-				}
-				if (iColoumn == 3)
-				{
-					v2d[iRow].sType = sLine;
-				}
-				if (iColoumn == 4)
-				{
-					v2d[iRow].sYear = sLine;
-				}
-					++iColoumn;
-				if (iColoumn == 5)
-				{
-					iColoumn = 0;
-					++iRow;
-				}
-				cout << sLine << "\n";
 			}
 			cout << "Ended" << endl;
+			search(v2d);
 		}
 		else
 		{
